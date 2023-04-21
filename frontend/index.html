@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>CNNSplice</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Responsive navbar-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#">CNNSplice</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="./index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./about.html">About</a></li>
+						<li class="nav-item"><a class="nav-link" href="./project.html">Project</a></li>
+						<li class="nav-item"><a class="nav-link" href="./contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+		<div class="container" style="margin: auto; min-height: 100vh;">
+			<div style="margin: 6em;">
+				<p style="text-align: justify; font-size: 20px;">The identification of splice site, or segments of an RNA gene where noncoding and coding sequences are connected in the 5' and 3' directions, is an essential post-transcriptional step for the annotation of functional genes and is required for the study and analysis of biological function in eukaryotic organisms through protein production and gene expression. Splice site detection tools have been proposed for this purpose; however, the models of these tools have a specific use case and are inefficiently or typically untransferable between organisms... <a href="./about.html" id="link">[Read More]</a></p>
+			</div>
+			
+            
+			<div style="margin: 6em;">
+			<h5>Evaluate your data <a target="_blank" rel="noopener noreferrer"  href="https://www.bioinformatics.nl/tools/crab_fasta.html" id="link">[fasta?]</a></h5>
+            <div>
+			<ul>
+  <li>Dataset sequence length is 400.</li>
+  <li>Genomic sequence input data should be transfomed using one-hot encoding.</li>
+</ul>
+</div>
+			<form id="evalForm" class="form-inline" action="">
+			
+				<div class="form-check">
+				  <div>
+					  <input class="form-check-input" type="radio" name="option" id="paste-option" value="past-fastq" onclick="onChange(0)" checked>
+					  <label class="form-check-label" for="flexRadioDefault1">
+						Paste fasta
+					  </label>
+					  
+				  </div>
+				  <p style="margin: 0px;">OR</p>
+				  <div>
+					  <input class="form-check-input" type="radio" name="option" id="upload-option" value="upload-fastq" onclick="onChange(1)">
+					  <label class="form-check-label" for="flexRadioDefault2">
+						Upload fasta
+					  </label>
+				  </div>
+				</div>
+
+				<div class="form-group">
+					<div id="past-fastq-div">
+						<label class="sr-only" for="pwd">Paste fasta</label>
+						<textarea id="paste-data" class="form-control" style="height: 200px;" aria-label="With textarea"></textarea>
+					</div>
+					<div id="upload-fastq-div" style="display:none;">
+						<label for="formFile" class="form-label">Select File</label>
+						<input class="form-control" type="file" id="formFile">
+					</div>
+				</div>
+				
+				<div class="form-group">
+				  <label class="sr-only" for="pwd">Species</label>
+				  <select class="form-select" aria-label="Default select example" id="species">
+					  <option selected>Choose species</option>
+					  <optgroup label="Acceptor">
+					  <option value="acceptor_cnnsplice_at.h5">Arabidopsis thaliana (Acceptor)</option>
+					  <option value="acceptor_cnnsplice_c_elegans.h5">Caenorhabditis elegans (Acceptor)</option>
+					  <option value="acceptor_cnnsplice_d_mel.h5">Drosophila melanogaster (Acceptor)</option>
+					  <option value="acceptor_cnnsplice_hs.h5">Homo sapiens (Acceptor)</option>
+					  <option value="acceptor_cnnsplice_oriza.h5">Oryza sativa japonica (Acceptor)</option>
+					  </optgroup>
+					  <optgroup label="Donor">
+					  <option value="donor_cnnsplice_at.h5">Arabidopsis thaliana (Donor)</option>
+					  <option value="donor_cnnsplice_c_elegans.h5">Caenorhabditis elegans (Donor)</option>
+					  <option value="donor_cnnsplice_d_mel.h5">Drosophila melanogaster (Donor)</option>
+					  <option value="donor_cnnsplice_hs.h5">Homo sapiens (Donor)</option>
+					  <option value="donor_cnnsplice_oriza.h5">Oryza sativa japonica (Donor)</option>
+					  </optgroup>
+					</select>
+				</div>
+				
+				<div class="form-group">
+				  <label class="sr-only" for="email">Email:</label>
+				  <input type="email" class="form-control" id="email" placeholder="Enter email"  name="email">
+				</div>
+				
+				<div style="margin-top:1em;" class="button">
+					<button style="width:100%;" type="submit" class="btn btn-success">Submit</button>
+				</div>
+			  </form>
+			</div>
+			
+		</div>
+		
+		<div style="display: grid; align-items: center; grid-template-columns: 1fr 1fr; column-gap: 5px; text-align: center;">
+			<h1>Supported by</h1>
+			<img src="./assets/uccs.png">
+		</div>
+		
+		<footer
+          class="text-center text-lg-start text-white"
+          style="background-color: #1c2331; margin-top: 4em;"
+          >
+			<div
+				 class="text-center p-3"
+				 style="background-color: rgba(0, 0, 0, 0.2)"
+				 >
+				 <a class="text-white" href="https://academics.uccs.edu/~ooluwada/bioinformaticslab.html"
+				 >Bioinformatics Lab</a> <br/>
+				 University of Colorado at Colorado Springs
+			</div>
+		</footer>
+  
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
