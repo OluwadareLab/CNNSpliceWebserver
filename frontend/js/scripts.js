@@ -6,6 +6,9 @@
 // This file is intentionally blank
 // Use this file to add JavaScript to your project
 
+const paste_uri = "";
+const upload_uri = ""
+
 var past_element = document.getElementById("past-fastq-div");
 var upload_element = document.getElementById("upload-fastq-div");
 
@@ -33,30 +36,62 @@ function showMore() {
 	document.getElementById('more').style.display = "block";
 }
 
-let loginForm = document.getElementById("evalForm");
+var loginForm = document.getElementById("evalForm");
 
 loginForm.addEventListener("submit", (e) => {
 	e.preventDefault();
 
+	var email = document.getElementById("email");
+	var model = document.getElementById("species");
+
+	var status = true;
 	if (document.getElementById('paste-option').checked) {
 		console.log("paste");
-		let data = document.getElementById('paste-data');
+		var data = document.getElementById('paste-data');
 		console.log(`${data.value}`);
+		status = checkFasta(file.value);
+
+		if (status) {
+			var body = {
+				"email" : email.value,
+				"model" : model.value,
+				"data" : data.value
+			};
+
+			fetch(paste_uri, {
+				method: "post",
+				body: JSON.stringify(body)
+			})
+			.then(results => results.json())
+			.catch((error) => ("Something went wrong!", error));
+		} else {
+
+		}
+
 	} else if (document.getElementById('upload-option').checked) {
 		console.log("upload");
-		let file = document.getElementById("formFile").value;
-		console.log(`${file.value}`);
-	}
+		var inputFile = document.getElementById("formFile");
+		for (const file of inputFile.files) {
+			console.log(`${file.value}`);
+			status = checkFasta(file.value);
+		}
 
-	let email = document.getElementById("email");
-	let species = document.getElementById("species");
+		if (status) {
+			const formData = new FormData();
+			formData.append("email", email.value);
+			formData.append("model", model.value);
+			formData.append("data", inputFile.files[0]);
+			fetch(upload_uri, {
+				method: "post",
+				body: formData,
+			}).catch((error) => ("Something went wrong!", error));
+		} else {
+
+		}
+	}
 
 	email.value = "";
 	species.selectedIndex = 0;
-
-	//console.log(`This form has a username of ${species.value} and password of ${email.value}`);
-
-
 	window.location.replace("./thankyou.html");
 	return;
 });
@@ -74,4 +109,33 @@ function sendRequest() {
 			console.log(`Error: ${xhr.status}`);
 		}
 	};
+}
+
+function checkFasta(data) {
+	var countHead = 0;
+	var countSeq = 0;
+	const regex = new RegExp("ab+c");
+	data.on('line', function (text) {
+		if (text.startWith(">example")) {
+			countHead++;
+		} else if (countSeq < countHead) {
+			if (text.trim().length != 400) {
+				return false;
+			}
+			countSeq++;
+		} else {
+			return false;
+		}
+	});
+
+	if (countHead != 4 && countSeq != 4) {
+		return false;
+	}
+
+	return true;
+}
+
+
+function send() {
+	const formData = new FormData();
 }
