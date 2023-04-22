@@ -1,57 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>CNNSplice</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
-    </head>
-    <body>
-        <!-- Responsive navbar-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-                <a class="navbar-brand" href="#">CNNSplice</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="./index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="./about.html">About</a></li>
-						<li class="nav-item"><a class="nav-link" href="./project.html">Project</a></li>
-						<li class="nav-item"><a class="nav-link" href="./contact.html">Contact</a></li>
-                    </ul>
-                </div>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>CNNSplice</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- Responsive navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">CNNSplice</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="./index.html">Home</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="./about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./project.html">Project</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./contact.html">Contact</a></li>
+                </ul>
             </div>
-        </nav>
-		<div class="container" style="margin: auto; min-height: 100vh;">
-			<div style="margin: 6em;">
-				<p style="text-align: justify; font-size: 20px;">
-				The identification of splice site, or segments of an RNA gene where noncoding and coding sequences are connected in the 5' and 3' directions, is an essential post-transcriptional step for the annotation of functional genes and is required for the study and analysis of biological function in eukaryotic organisms through protein production and gene expression. Splice site detection tools have been proposed for this purpose; however, the models of these tools have a specific use case and are inefficiently or typically untransferable between organisms. Here, we present CNNSplice, a set of deep convolutional neural network models for splice site prediction. Using the five-fold cross-validation model selection technique, we explore several models based on typical machine learning applications and propose five high-performing models to efficiently predict the true and false SS in balanced and imbalanced datasets. Our evaluation results indicate that CNNSplice’s models achieve a better performance compared with existing methods across five organisms’ datasets. In addition, our generality test shows CNNSplice’s model ability to predict and annotate splice sites in new or poorly trained genome datasets indicating a broad application spectrum. CNNSplice demonstrates improved model prediction, interpretability, and generalizability on genomic datasets compared to existing splice site prediction tools.
-				</p>
-			</div>
         </div>
-		
-		<footer
-          class="text-center text-lg-start text-white"
-          style="background-color: #1c2331; margin-top: 4em;"
-          >
-			<div
-				 class="text-center p-3"
-				 style="background-color: rgba(0, 0, 0, 0.2)"
-				 >
-				 <a class="text-white" href="https://academics.uccs.edu/~ooluwada/bioinformaticslab.html"
-				 >Bioinformatics Lab</a> <br/>
-				 University of Colorado at Colorado Springs
-			</div>
-		</footer>
-        
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-    </body>
+    </nav>
+    <div class="container" style="margin: auto; min-height: 100vh;">
+        <div style="margin: 6em;">
+            <p style="text-align: justify; font-size: 20px;">
+                The identification of splice site, or segments of an RNA gene where noncoding and coding sequences are
+                connected in the 5' and 3' directions, is an essential post-transcriptional step for the annotation of
+                functional genes and is required for the study and analysis of biological function in eukaryotic
+                organisms through protein production and gene expression. Splice site detection tools have been proposed
+                for this purpose; however, the models of these tools have a specific use case and are inefficiently or
+                typically untransferable between organisms. Here, we present CNNSplice, a set of deep convolutional
+                neural network models for splice site prediction. Using the five-fold cross-validation model selection
+                technique, we explore several models based on typical machine learning applications and propose five
+                high-performing models to efficiently predict the true and false SS in balanced and imbalanced datasets.
+                Our evaluation results indicate that CNNSplice’s models achieve a better performance compared with
+                existing methods across five organisms’ datasets. In addition, our generality test shows CNNSplice’s
+                model ability to predict and annotate splice sites in new or poorly trained genome datasets indicating a
+                broad application spectrum. CNNSplice demonstrates improved model prediction, interpretability, and
+                generalizability on genomic datasets compared to existing splice site prediction tools.
+            </p>
+        </div>
+    </div>
+
+    <footer class="text-center text-lg-start text-white" style="background-color: #1c2331; margin-top: 4em;">
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+            <a class="text-white" href="https://academics.uccs.edu/~ooluwada/bioinformaticslab.html">Bioinformatics
+                Lab</a> <br />
+            University of Colorado at Colorado Springs
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+</body>
+
 </html>
