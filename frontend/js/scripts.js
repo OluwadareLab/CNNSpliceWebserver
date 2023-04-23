@@ -130,7 +130,7 @@ function checkFasta(data) {
 		if (line.startsWith(">example")) {
 			countHead++;
 		} else if (countSeq < countHead) {
-			if (line.trim().length != 4) {
+			if (line.trim().length != 400) {
 				return false;
 			}
 			countSeq++;
