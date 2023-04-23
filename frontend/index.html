@@ -48,10 +48,12 @@
 		<div style="margin: 6em;">
 			<h5>Evaluate your data <a target="_blank" rel="noopener noreferrer"
 					href="https://www.bioinformatics.nl/tools/crab_fasta.html" id="link">[fasta?]</a></h5>
+					<div style="display: none;" class="alert alert-danger" role="alert" id="alart-box">
+						<strong>fasta</strong> format is not correct. Check input.
+					</div>
 			<div>
 				<ul>
 					<li>Dataset sequence length is 400.</li>
-					<li>Genomic sequence input data should be transfomed using one-hot encoding.</li>
 				</ul>
 			</div>
 
@@ -83,7 +85,7 @@
 					</div>
 					<div id="upload-fastq-div" style="display:none;">
 						<label for="formFile" class="form-label">Select File</label>
-						<input class="form-control" type="file" id="formFile">
+						<input class="form-control" type="file" id="file">
 					</div>
 				</div>
 
@@ -114,7 +116,7 @@
 				</div>
 
 				<div style="margin-top:1em;" class="button">
-					<button style="width:100%;" type="submit" class="btn btn-success">Submit</button>
+					<button style="width:100%;" type="submit" class="btn btn-success" >Submit</button>
 				</div>
 				
 			</form>

@@ -9,17 +9,19 @@
 const paste_uri = "";
 const upload_uri = ""
 
-var past_element = document.getElementById("past-fastq-div");
-var upload_element = document.getElementById("upload-fastq-div");
+var pastElement = document.getElementById("past-fastq-div");
+var uploadElement = document.getElementById("upload-fastq-div");
+var loginForm = document.getElementById("evalForm");
+var alartBox = document.getElementById("alart-box");
 
 function onChange(val) {
 	if (val == 0) {
-		upload_element.style.display = "none";
-		past_element.style.display = "block";
+		uploadElement.style.display = "none";
+		pastElement.style.display = "block";
 	}
 	else {
-		past_element.style.display = "none";
-		upload_element.style.display = "block";
+		pastElement.style.display = "none";
+		uploadElement.style.display = "block";
 	}
 	return;
 }
@@ -30,69 +32,76 @@ function backHome() {
 }
 
 function showMore() {
-	//removes the link
 	document.getElementById('link').parentElement.removeChild('link');
-	//shows the #more
 	document.getElementById('more').style.display = "block";
 }
 
-var loginForm = document.getElementById("evalForm");
+async function readContent(file) {
+	let reader = new FileReader()
+	reader.readAsText(file)
+	await new Promise(resolve => reader.onload = () => resolve())
+	return reader.result
+}
 
-loginForm.addEventListener("submit", (e) => {
-	e.preventDefault();
+loginForm.addEventListener("submit", async (event) => {
+	event.preventDefault();
 
 	var email = document.getElementById("email");
 	var model = document.getElementById("species");
+	var data = "";
 
-	var status = true;
+	var status = false;
 	if (document.getElementById('paste-option').checked) {
-		console.log("paste");
-		var data = document.getElementById('paste-data');
-		console.log(`${data.value}`);
-		status = checkFasta(file.value);
+		data = document.getElementById('paste-data').value;
+		status = checkFasta(data);
 
 		if (status) {
 			var body = {
-				"email" : email.value,
-				"model" : model.value,
-				"data" : data.value
+				"email": email.value,
+				"model": model.value,
+				"data": data.value
 			};
 
-			fetch(paste_uri, {
+			await fetch(paste_uri, {
 				method: "post",
 				body: JSON.stringify(body)
-			})
-			.then(results => results.json())
-			.catch((error) => ("Something went wrong!", error));
-		} else {
+			}).then(results => {
+				results.json();
+				window.location.replace("./thankyou.html");
+			}).catch((error) => ("Something went wrong!", error));
 
+		} else {
+			document.getElementById("alart-box").style.display = "block";
 		}
 
 	} else if (document.getElementById('upload-option').checked) {
-		console.log("upload");
-		var inputFile = document.getElementById("formFile");
-		for (const file of inputFile.files) {
-			console.log(`${file.value}`);
-			status = checkFasta(file.value);
-		}
+		var inputFiles = document.getElementById('file');
+		data = await readContent(inputFiles.files[0]);
+		status = checkFasta(data);
 
 		if (status) {
 			const formData = new FormData();
 			formData.append("email", email.value);
 			formData.append("model", model.value);
-			formData.append("data", inputFile.files[0]);
-			fetch(upload_uri, {
+			formData.append("data", inputFiles.files[0]);
+
+			await fetch(upload_uri, {
 				method: "post",
 				body: formData,
+			}).then(results => {
+				results.json();
+				window.location.replace("./thankyou.html");
 			}).catch((error) => ("Something went wrong!", error));
-		} else {
 
+		} else {
+			document.getElementById("alart-box").style.display = "block";
 		}
+
 	}
 
 	email.value = "";
 	species.selectedIndex = 0;
-	window.location.replace("./thankyou.html");
+
 	return;
 });
 
@@ -114,28 +123,25 @@ function sendRequest() {
 function checkFasta(data) {
 	var countHead = 0;
 	var countSeq = 0;
-	const regex = new RegExp("ab+c");
-	data.on('line', function (text) {
-		if (text.startWith(">example")) {
+
+	var lines = data.trim().split('\n');
+	for (var i = 0; i < lines.length; i++) {
+		var line = lines[i];
+		if (line.startsWith(">example")) {
 			countHead++;
 		} else if (countSeq < countHead) {
-			if (text.trim().length != 400) {
+			if (line.trim().length != 4) {
 				return false;
 			}
 			countSeq++;
 		} else {
 			return false;
 		}
-	});
+	}
 
 	if (countHead != 4 && countSeq != 4) {
 		return false;
 	}
 
 	return true;
-}
-
-
-function send() {
-	const formData = new FormData();
 }
