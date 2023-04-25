@@ -62,9 +62,12 @@ loginForm.addEventListener("submit", async (event) => {
 				"data": data.value
 			};
 
+			body = JSON.stringify(body);
+			console.log(`${body}`);
+
 			await fetch(paste_uri, {
 				method: "post",
-				body: JSON.stringify(body)
+				body: body
 			}).then(results => {
 				results.json();
 				window.location.replace("./thankyou.html");
@@ -85,6 +88,8 @@ loginForm.addEventListener("submit", async (event) => {
 			formData.append("model", model.value);
 			formData.append("data", inputFiles.files[0]);
 
+			console.log(`${JSON.stringify(formData)}`);
+			
 			await fetch(upload_uri, {
 				method: "post",
 				body: formData,
@@ -123,14 +128,17 @@ function sendRequest() {
 function checkFasta(data) {
 	var countHead = 0;
 	var countSeq = 0;
-
+	var regex = "^[ATGCatcg]+$";
 	var lines = data.trim().split('\n');
 	for (var i = 0; i < lines.length; i++) {
 		var line = lines[i];
-		if (line.startsWith(">example")) {
+		if (line.startsWith(">")) {
 			countHead++;
 		} else if (countSeq < countHead) {
 			if (line.trim().length != 400) {
+				return false;
+			}
+			if(!regex.match(line)) {
 				return false;
 			}
 			countSeq++;
@@ -139,7 +147,7 @@ function checkFasta(data) {
 		}
 	}
 
-	if (countHead != 4 && countSeq != 4) {
+	if (countHead < 1 && countSeq < 1 && countHead != countSeq) {
 		return false;
 	}
 
