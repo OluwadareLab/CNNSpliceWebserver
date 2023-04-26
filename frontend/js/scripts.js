@@ -113,7 +113,7 @@ document.getElementById("evalForm").addEventListener("submit", async (event) => 
 				results.json();
 				document.getElementById("email").value = "";
 				document.getElementById("species").selectedIndex = 0;
-				window.location.replace("./thankyou.html");
+				window.location.replace("./success.html");
 			}).catch((error) => {
 				console.log("Something went wrong!", error);
 				document.getElementById("email").value = "";
@@ -154,7 +154,7 @@ document.getElementById("evalForm").addEventListener("submit", async (event) => 
 				results.json();
 				document.getElementById("email").value = "";
 				document.getElementById("species").selectedIndex = 0;
-				window.location.replace("./thankyou.html");
+				window.location.replace("./success.html");
 			}).catch((error) => {
 				console.log("Something went wrong!", error);
 				document.getElementById("email").value = "";

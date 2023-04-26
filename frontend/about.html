@@ -26,30 +26,61 @@
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="./index.html">Home</a>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="./about.html">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./project.html">Project</a></li>
                     <li class="nav-item"><a class="nav-link" href="./contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" style="text-decoration: none;" target="_blank"
+                            rel="noopener noreferrer" href="https://github.com/OluwadareLab/CNNSplice"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" fill="currentColor"
+                                class="bi bi-github text-white" viewBox="0 0 16 16">
+                                <path
+                                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+                            </svg></i></a></li>
                 </ul>
             </div>
         </div>
     </nav>
     <div class="container" style="margin: auto; min-height: 100vh;">
-        <div style="margin: 6em;">
-            <p style="text-align: justify; font-size: 20px;">
-                The identification of splice site, or segments of an RNA gene where noncoding and coding sequences are
-                connected in the 5' and 3' directions, is an essential post-transcriptional step for the annotation of
-                functional genes and is required for the study and analysis of biological function in eukaryotic
-                organisms through protein production and gene expression. Splice site detection tools have been proposed
-                for this purpose; however, the models of these tools have a specific use case and are inefficiently or
-                typically untransferable between organisms. Here, we present CNNSplice, a set of deep convolutional
-                neural network models for splice site prediction. Using the five-fold cross-validation model selection
-                technique, we explore several models based on typical machine learning applications and propose five
-                high-performing models to efficiently predict the true and false SS in balanced and imbalanced datasets.
-                Our evaluation results indicate that CNNSplice’s models achieve a better performance compared with
-                existing methods across five organisms’ datasets. In addition, our generality test shows CNNSplice’s
-                model ability to predict and annotate splice sites in new or poorly trained genome datasets indicating a
-                broad application spectrum. CNNSplice demonstrates improved model prediction, interpretability, and
-                generalizability on genomic datasets compared to existing splice site prediction tools.
+        <div style="text-align: justify; margin-left: 6em; margin-right: 6em;margin-top: 2em;">
+            <h3>CNNSplice: Robust Models for Splice Site Prediction Using Convolutional Neural Networks</h3>
+            <p style="font-size: 20px;">
+                We present CNNSplice, a set of deep convolutional neural network models for splice site prediction.
+                Using the five-fold cross-validation model selection technique, we explore several models based on
+                typical machine learning applications and propose five high-performing models to efficiently predict the
+                true and false SS in balanced and imbalanced datasets. Our evaluation results indicate that CNNSplice's
+                models achieve a better performance compared with existing methods across five organisms' datasets. In
+                addition, our generality test shows CNNSplice's model ability to predict and annotate splice sites in
+                new or poorly trained genome datasets indicating a broad application spectrum. CNNSplice demonstrates
+                improved model prediction, interpretability, and generalizability on genomic datasets compared to
+                existing splice site prediction tools. CNNSplice can be accessed and utilized as an open-sourced
+                software at github and is also available as a containerized
+                application that can be run on any platform.
             </p>
+            <h5>One-Hot Encoding and Parameter Tuning</h5>
+            <p>In this study, we utilized a binary integer variable collection to represent our input genomic
+                nucleotide bases. Specifically, we assigned <span style="font-weight: 500; color: blue;">[1 0 0
+                    0]</span>, <span style="font-weight: 500; color: blue;">[0 1 0
+                    0]</span>, <span style="font-weight: 500; color: blue;">[0 0 1 0]</span>, and <span
+                    style="font-weight: 500; color: blue;">[0 0 0 1]</span> to represent
+                <span style="font-weight: 500; color: blue;">Adenine (A)</span>, <span
+                    style="font-weight: 500; color: blue;">Cytosine (C)</span>, <span
+                    style="font-weight: 500; color: blue;">Guanine (G)</span>, and <span
+                    style="font-weight: 500; color: blue;">Thymine (T)</span>, respectively. Additionally, we
+                represented invalid nucleotide letters <span style="font-weight: 500; color: blue;">(N)</span> with
+                <span style="font-weight: 500; color: blue;">[0,0,0,0]</span>, where each nucleotide is located at the
+                corresponding
+                vector index containing a value of <span style="font-weight: 500; color: blue;">1</span>. Therefore, we
+                provided the CNN architecture with a <span style="font-weight: 500; color: blue;">Z X 4</span> input
+                matrix, where <span style="font-weight: 500; color: blue;">Z</span> denotes the genomic sequence length
+                and <span style="font-weight: 500; color: blue;">4</span> denotes the nucleotide types <span
+                    style="font-weight: 500; color: blue;">(A, C, G, T)</span>.
+            </p>
+            <h5>Genomic Datasets Sequence Length Selection</h5>
+            <p>To maintain a good sequence length balance, and for a fair model prediction and comparison with
+                other baseline methods, we used a sequence length of <span
+                    style="font-weight: 500; color: blue;">400</span> of sequence region <span
+                    style="font-weight: 500; color: blue;">0-399</span>. Thus, all algorithm
+                acceptor and donor input species datasets regions in this study have a sequence length of <span
+                    style="font-weight: 500; color: blue;">400</span>
+                nucleotides bases.</p>
         </div>
     </div>
 
