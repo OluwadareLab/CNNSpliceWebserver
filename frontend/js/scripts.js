@@ -54,40 +54,11 @@ async function readContent(file) {
 	return reader.result;
 }
 
-/*
-const reader = new FileReader();
-function handleEvent(event) {
-	if (event.type === "load") {
-		document.querySelector("p.preview").value = reader.result;
-	}
-}
-
-function addListeners(reader) {
-	reader.addEventListener("loadstart", handleEvent);
-	reader.addEventListener("load", handleEvent);
-	reader.addEventListener("loadend", handleEvent);
-	reader.addEventListener("progress", handleEvent);
-	reader.addEventListener("error", handleEvent);
-	reader.addEventListener("abort", handleEvent);
-}
-
-function handleSelected(e) {
-	const selectedFile = document.querySelector('input[type="file"]').files[0];
-	if (selectedFile) {
-		addListeners(reader);
-		reader.readAsText(selectedFile);
-	}
-}
-
-document.querySelector('input[type="file"]').addEventListener("change", handleSelected);
-*/
-
 document.getElementById("evalForm").addEventListener("submit", async (event) => {
 	event.preventDefault();
 
 	var email = document.getElementById("email").value;
 	var model = document.getElementById("species").value;
-	console.log('submit');
 
 	var status = false;
 	if (document.getElementById('paste-option').checked) {
@@ -104,7 +75,6 @@ document.getElementById("evalForm").addEventListener("submit", async (event) => 
 			};
 
 			body = JSON.stringify(body);
-			console.log(`${body}`);
 
 			await fetch(paste_uri, {
 				method: "post",
@@ -115,11 +85,9 @@ document.getElementById("evalForm").addEventListener("submit", async (event) => 
 				document.getElementById("species").selectedIndex = 0;
 				window.location.replace('./success.html?link=' + encodeURIComponent('https://github.com/OluwadareLab/CNNSplice'));
 			}).catch((error) => {
-				console.log("Something went wrong!", error);
 				document.getElementById("email").value = "";
 				document.getElementById("species").selectedIndex = 0;
-				// window.location.replace("./error.html");
-				window.location.replace('./success.html?link=' + encodeURIComponent('https://github.com/OluwadareLab/CNNSplice'));
+				window.location.replace("./error.html");
 			});
 		} else {
 			document.getElementById("alart-box").style.display = "block";
@@ -127,15 +95,9 @@ document.getElementById("evalForm").addEventListener("submit", async (event) => 
 
 	} else if (document.getElementById('upload-option').checked) {
 
-		console.log('upload');
-
 		var file = document.getElementById('file').files[0];
-		console.log(file);
-
-		// var sequenceText = document.querySelector("p.preview").value;
 
 		var sequenceText = await readContent(file);
-		console.log(`${sequenceText}`);
 		status = checkFasta(sequenceText);
 
 		if (status) {
@@ -146,8 +108,6 @@ document.getElementById("evalForm").addEventListener("submit", async (event) => 
 			formData.append("model", model);
 			formData.append("data", file);
 
-			console.log(`${JSON.stringify(formData)}`);
-
 			await fetch(upload_uri, {
 				method: "post",
 				body: formData,
@@ -157,11 +117,9 @@ document.getElementById("evalForm").addEventListener("submit", async (event) => 
 				document.getElementById("species").selectedIndex = 0;
 				window.location.replace('./success.html?link=' + encodeURIComponent('https://github.com/OluwadareLab/CNNSplice'));
 			}).catch((error) => {
-				console.log("Something went wrong!", error);
 				document.getElementById("email").value = "";
 				document.getElementById("species").selectedIndex = 0;
-				// window.location.replace("./error.html");
-				window.location.replace('./success.html?link=' + encodeURIComponent('https://github.com/OluwadareLab/CNNSplice'));
+				window.location.replace("./error.html");
 			});
 		} else {
 			document.getElementById("alart-box").style.display = "block";
