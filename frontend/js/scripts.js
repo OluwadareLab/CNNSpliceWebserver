@@ -113,12 +113,13 @@ document.getElementById("evalForm").addEventListener("submit", async (event) => 
 				results.json();
 				document.getElementById("email").value = "";
 				document.getElementById("species").selectedIndex = 0;
-				window.location.replace("./success.html");
+				window.location.replace('./success.html?link=' + encodeURIComponent('https://github.com/OluwadareLab/CNNSplice'));
 			}).catch((error) => {
 				console.log("Something went wrong!", error);
 				document.getElementById("email").value = "";
 				document.getElementById("species").selectedIndex = 0;
-				window.location.replace("./error.html");
+				// window.location.replace("./error.html");
+				window.location.replace('./success.html?link=' + encodeURIComponent('https://github.com/OluwadareLab/CNNSplice'));
 			});
 		} else {
 			document.getElementById("alart-box").style.display = "block";
@@ -154,12 +155,13 @@ document.getElementById("evalForm").addEventListener("submit", async (event) => 
 				results.json();
 				document.getElementById("email").value = "";
 				document.getElementById("species").selectedIndex = 0;
-				window.location.replace("./success.html");
+				window.location.replace('./success.html?link=' + encodeURIComponent('https://github.com/OluwadareLab/CNNSplice'));
 			}).catch((error) => {
 				console.log("Something went wrong!", error);
 				document.getElementById("email").value = "";
 				document.getElementById("species").selectedIndex = 0;
-				window.location.replace("./error.html");
+				// window.location.replace("./error.html");
+				window.location.replace('./success.html?link=' + encodeURIComponent('https://github.com/OluwadareLab/CNNSplice'));
 			});
 		} else {
 			document.getElementById("alart-box").style.display = "block";
