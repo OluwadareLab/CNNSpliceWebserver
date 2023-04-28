@@ -54,11 +54,16 @@ async function readContent(file) {
 	return reader.result;
 }
 
+function loadExample() {
+	document.getElementById('paste-data').value = ">example\nTTTTTTCGCATTGCTACGTCTGTCACCTTTCCCCACCAAGTTTGCAGTAAATGACGTGGAGCTTAGAATACCAAACCATATACATTGGGATGGGGACAATATTCGCAAAACGCAATCCGCTACATTAACACACTCCCAATCAGCAATCTAGCGATCCGTCTGGCGTGGAAAAAGAAAGATTTATAGTTACTGGGAGCCACCCCAATATTGCATGACTTCTCGCGTGTGTCGCAGACGTAATGACGACGACTCGGTCCGGCACGTTCCTTACGGTTGGCTAAATCTCGCCCAACCGTCTGAAGGTACGTGAGTCACCGCACACAAAGTAAGGGGCGACGGAGCCAACAGTGGTTCATATTTATTTGATCCAACAAACCCAACAAGACTCGCCCGGGTGTAT";
+	document.getElementById("model").selectedIndex = 1;
+}
+
 document.getElementById("evalForm").addEventListener("submit", async (event) => {
 	event.preventDefault();
 
 	var email = document.getElementById("email").value;
-	var model = document.getElementById("species").value;
+	var model = document.getElementById("model").value;
 
 	var status = false;
 	if (document.getElementById('paste-option').checked) {
@@ -82,11 +87,11 @@ document.getElementById("evalForm").addEventListener("submit", async (event) => 
 			}).then(results => {
 				results.json();
 				document.getElementById("email").value = "";
-				document.getElementById("species").selectedIndex = 0;
+				document.getElementById("model").selectedIndex = 0;
 				window.location.replace('./success.html?link=' + encodeURIComponent('https://github.com/OluwadareLab/CNNSplice'));
 			}).catch((error) => {
 				document.getElementById("email").value = "";
-				document.getElementById("species").selectedIndex = 0;
+				document.getElementById("model").selectedIndex = 0;
 				window.location.replace("./error.html");
 			});
 		} else {
@@ -95,10 +100,14 @@ document.getElementById("evalForm").addEventListener("submit", async (event) => 
 
 	} else if (document.getElementById('upload-option').checked) {
 
-		var file = document.getElementById('file').files[0];
+		const start = Date.now();
 
+		var file = document.getElementById('file').files[0];
 		var sequenceText = await readContent(file);
 		status = checkFasta(sequenceText);
+
+		const end = Date.now();
+		console.log(`Execution time: ${end - start} ms`);
 
 		if (status) {
 			document.getElementById("alart-box").style.display = "none";
@@ -114,11 +123,11 @@ document.getElementById("evalForm").addEventListener("submit", async (event) => 
 			}).then(results => {
 				results.json();
 				document.getElementById("email").value = "";
-				document.getElementById("species").selectedIndex = 0;
+				document.getElementById("model").selectedIndex = 0;
 				window.location.replace('./success.html?link=' + encodeURIComponent('https://github.com/OluwadareLab/CNNSplice'));
 			}).catch((error) => {
 				document.getElementById("email").value = "";
-				document.getElementById("species").selectedIndex = 0;
+				document.getElementById("model").selectedIndex = 0;
 				window.location.replace("./error.html");
 			});
 		} else {
