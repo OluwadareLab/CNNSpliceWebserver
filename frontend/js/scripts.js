@@ -88,7 +88,7 @@ document.getElementById("evalForm").addEventListener("submit", async (event) => 
 				results.json();
 				document.getElementById("email").value = "";
 				document.getElementById("model").selectedIndex = 0;
-				window.location.replace('./success.html?link=' + encodeURIComponent('https://github.com/OluwadareLab/CNNSplice'));
+				// window.location.replace('./success.html?link=' + encodeURIComponent('https://github.com/OluwadareLab/CNNSplice'));
 			}).catch((error) => {
 				document.getElementById("email").value = "";
 				document.getElementById("model").selectedIndex = 0;
@@ -104,6 +104,7 @@ document.getElementById("evalForm").addEventListener("submit", async (event) => 
 
 		var file = document.getElementById('file').files[0];
 		var sequenceText = await readContent(file);
+		
 		status = checkFasta(sequenceText);
 
 		const end = Date.now();
@@ -124,7 +125,7 @@ document.getElementById("evalForm").addEventListener("submit", async (event) => 
 				results.json();
 				document.getElementById("email").value = "";
 				document.getElementById("model").selectedIndex = 0;
-				window.location.replace('./success.html?link=' + encodeURIComponent('https://github.com/OluwadareLab/CNNSplice'));
+				// window.location.replace('./success.html?link=' + encodeURIComponent('https://github.com/OluwadareLab/CNNSplice'));
 			}).catch((error) => {
 				document.getElementById("email").value = "";
 				document.getElementById("model").selectedIndex = 0;
