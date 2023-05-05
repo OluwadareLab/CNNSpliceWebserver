@@ -12628,3 +12628,8 @@ fieldset:disabled .btn {
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
 }
+
+.form-group.required .control-label:after { 
+  content:"*";
+  color:red;
+}

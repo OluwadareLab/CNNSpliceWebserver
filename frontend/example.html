@@ -26,7 +26,7 @@
 					<li class="nav-item"><a class="nav-link active" aria-current="page" href="./index.html">Home</a>
 					</li>
 					<li class="nav-item"><a class="nav-link" href="./about.html">About</a></li>
-					<li class="nav-item"><a class="nav-link" id="example" href="javascript:loadExample();">Example</a>
+					<li class="nav-item"><a class="nav-link" id="example" href="javascript:loadExample();">Tutorial/Example</a>
 					</li>
 					<li class="nav-item"><a class="nav-link" href="./contact.html">Contact</a></li>
 					<li class="nav-item"><a class="nav-link" style="text-decoration: none;" target="_blank"
@@ -56,7 +56,7 @@
 
 			<form id="evalForm" class="form-inline" action="">
 
-				<p style="color: darkorange;">Step 1: Select the prefered data upload option.</p>
+				<p style="color: blue; font-weight: 500;">Step 1: Select the prefered data upload option.</p>
 				<div class="form-check">
 					<div>
 						<input class="form-check-input" type="radio" name="option" id="paste-option" value="past-fastq"
@@ -75,23 +75,23 @@
 					</div>
 				</div>
 
-				<p style="color: darkorange;">Step 2: Paste data or Upload file according to your step 1 selection.</p>
-				<div id="data-option" class="form-group">
+				<p style="color: blue; font-weight: 500;">Step 2: Paste data or Upload file according to your step 1 selection.</p>
+				<div id="data-option" class="form-group required">
 					<div id="past-fastq-div">
-						<label class="sr-only" for="pwd">Paste fasta</label>
+						<label class="sr-only control-label" for="pwd">Paste fasta</label>
 						<textarea id="paste-data" class="form-control" style="height: 200px;" aria-label="With textarea"
 							placeholder=">example&#10;TTTTTTCGCATTGCTACGTCTGTCACCTTTCCCCACCAAGTTTGCAGTAAATGACGTGGAGCTTAGAATACCAAACCATATACATTGGGATGGGGACAATATTCGCAAAACGCAATCCGCTACATTAACACACTCCCAATCAGCAATCTAGCGATCCGTCTGGCGTGGAAAAAGAAAGATTTATAGTTACTGGGAGCCACCCCAATATTGCATGACTTCTCGCGTGTGTCGCAGACGTAATGACGACGACTCGGTCCGGCACGTTCCTTACGGTTGGCTAAATCTCGCCCAACCGTCTGAAGGTACGTGAGTCACCGCACACAAAGTAAGGGGCGACGGAGCCAACAGTGGTTCATATTTATTTGATCCAACAAACCCAACAAGACTCGCCCGGGTGTAT"></textarea>
 					</div>
 					<div id="upload-fastq-div" style="display:none;">
-						<label for="formFile" class="form-label">Select File</label>
+						<label for="formFile control-label" class="form-label">Select File</label>
 						<input class="form-control" type="file" id="file" onclick="this.value=null;">
 						<p class="preview" style="display: none;"></p>
 					</div>
 				</div>
 
-				<p style="color: darkorange;">Step 3: Select model name.</p>
-				<div class="form-group">
-					<label class="sr-only" for="pwd">Model</label>
+				<p style="color: blue; font-weight: 500;">Step 3: Select a model type.</p>
+				<div class="form-group required">
+					<label class="sr-only control-label" for="pwd">Model</label>
 					<select class="form-select" aria-label="Default select example" id="model" required>
 						<option value="" disabled selected>Choose species</option>
 						<optgroup label="Acceptor">
@@ -111,13 +111,13 @@
 					</select>
 				</div>
 
-				<p style="color: darkorange;">Step 4: Provide your prefered email address to receive the result link.</p>
-				<div class="form-group">
-					<label class="sr-only" for="email">Email:</label>
+				<p style="color: blue; font-weight: 500;">Step 4: Provide your prefered email address to receive job status updates.</p>
+				<div class="form-group required">
+					<label class="sr-only control-label" for="email">Email</label>
 					<input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
 				</div>
 
-				<p style="color: darkorange;">Step 5: All set. Submit your request and get the link accordingly in your email.</p>
+				<p style="color: blue; font-weight: 500;">Step 5: Submit your job.</p>
 				<div style="margin-top:1em;" class="button">
 					<button style="width:100%;" type="submit" class="btn btn-success">Submit</button>
 				</div>
