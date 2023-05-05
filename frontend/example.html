@@ -42,23 +42,9 @@
 	</nav>
 
 	<div class="container" style="margin: auto; min-height: 100vh;">
-		<div style="text-align: justify; margin-left: 6em; margin-right: 6em;margin-top: 2em;">
-			<h3>CNNSplice: Robust Models for Splice Site Prediction Using Convolutional Neural Networks</h3>
-			<p style="font-size: 20px;">We present CNNSplice, a set of deep convolutional neural network models for
-				splice site prediction.
-				Using the five-fold cross-validation model selection technique, we explore several models based on
-				typical machine learning applications and propose five high-performing models to efficiently predict the
-				true and false SS in balanced and imbalanced datasets. Our evaluation results indicate that CNNSplice’s
-				models achieve a better performance compared with existing methods across five organisms' datasets....
-				<a href="./about.html" id="link">[Read More]</a>
-			</p>
-		</div>
-
-
 		<div style="margin: 6em;">
 			<h5>Evaluate your data <a target="_blank" rel="noopener noreferrer"
-					href="https://www.bioinformatics.nl/tools/crab_fasta.html" id="link">[fasta?]</a> <a id="example"
-					href="javascript:loadExample();">[Load Example]</a></h5>
+					href="https://www.bioinformatics.nl/tools/crab_fasta.html" id="link">[fasta?]</a></h5>
 			<div style="display: none;" class="alert alert-danger" role="alert" id="alart-box">
 				<strong>fasta</strong> format is not correct. Check input.
 			</div>
@@ -70,6 +56,7 @@
 
 			<form id="evalForm" class="form-inline" action="">
 
+				<p style="color: darkorange;">Step 1: Select the prefered data upload option.</p>
 				<div class="form-check">
 					<div>
 						<input class="form-check-input" type="radio" name="option" id="paste-option" value="past-fastq"
@@ -88,6 +75,7 @@
 					</div>
 				</div>
 
+				<p style="color: darkorange;">Step 2: Paste data or Upload file according to your step 1 selection.</p>
 				<div id="data-option" class="form-group">
 					<div id="past-fastq-div">
 						<label class="sr-only" for="pwd">Paste fasta</label>
@@ -101,6 +89,7 @@
 					</div>
 				</div>
 
+				<p style="color: darkorange;">Step 3: Select model name.</p>
 				<div class="form-group">
 					<label class="sr-only" for="pwd">Model</label>
 					<select class="form-select" aria-label="Default select example" id="model" required>
@@ -122,11 +111,13 @@
 					</select>
 				</div>
 
+				<p style="color: darkorange;">Step 4: Provide your prefered email address to receive the result link.</p>
 				<div class="form-group">
 					<label class="sr-only" for="email">Email:</label>
 					<input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
 				</div>
 
+				<p style="color: darkorange;">Step 5: All set. Submit your request and get the link accordingly in your email.</p>
 				<div style="margin-top:1em;" class="button">
 					<button style="width:100%;" type="submit" class="btn btn-success">Submit</button>
 				</div>

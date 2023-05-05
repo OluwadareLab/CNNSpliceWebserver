@@ -1,5 +1,5 @@
-const paste_uri = "";
-const upload_uri = ""
+const paste_uri = "localhost:8080";
+const upload_uri = "localhost:8080";
 
 function onChange(val) {
 	if (val == 0) {
@@ -55,8 +55,9 @@ async function readContent(file) {
 }
 
 function loadExample() {
-	document.getElementById('paste-data').value = ">example\nTTTTTTCGCATTGCTACGTCTGTCACCTTTCCCCACCAAGTTTGCAGTAAATGACGTGGAGCTTAGAATACCAAACCATATACATTGGGATGGGGACAATATTCGCAAAACGCAATCCGCTACATTAACACACTCCCAATCAGCAATCTAGCGATCCGTCTGGCGTGGAAAAAGAAAGATTTATAGTTACTGGGAGCCACCCCAATATTGCATGACTTCTCGCGTGTGTCGCAGACGTAATGACGACGACTCGGTCCGGCACGTTCCTTACGGTTGGCTAAATCTCGCCCAACCGTCTGAAGGTACGTGAGTCACCGCACACAAAGTAAGGGGCGACGGAGCCAACAGTGGTTCATATTTATTTGATCCAACAAACCCAACAAGACTCGCCCGGGTGTAT";
-	document.getElementById("model").selectedIndex = 1;
+	var seq = ">example 0\nTGAAAATGCGTATTTCGCAACCTATTTGACGCGCAAAATATCTCGTAGCGAAAACTATAGTAATTCTTTAAATGACTACTGTAGCGCTTGTGTCGATTTACGGGCTCGATTTTTAAAATGAATTAAAATAATTTATTAATTTAAATAACGATAGAATATTAAAATTAAGTTTCATTTCAAAAATCGAGTTCCCGTAAATCGACACAAGCCCTACAGTAGTGGTTTAAAGAGTTACTGTAGTTTTCGCTACGAGATATTTTGTCAAATATGTTGCTCAATGTACGCATTCTCAGAATTCTGTGTTACCGTAATATATTTGTGTTTTATTATTTCAAAAAAAAAAAACAAAAATGGCGAAGTGTGAAAATATTATTCGGAAAATTGAATTGTTTTTCTTCCA\n>example 1\nACATGGAAACGAGATATTCTTAACGTTTTCTTCAAGTTCAATTAAAACCAATGCGAACATATTGTCAAAATCTACCTCCTGTTCTTTAACATTGATTAGTACCGCCTGAAAATGCTTGATGATGTTTGTAAAATGAGCTATGGAATTACTTTTTTTGGTTTCAAATAACATTGACTAGATGAGCAGTTTCCTGGGATCACCTTCATATTTTTTGTCACTTCTTCGGGAATTATTGCGCTTCTGCAAATATGGGAGTTTTCGAGAACATGATTCGATTACGAAATTCTTCAAAGTAGGCGTAGGTAATCTTTGAAGATGGAGTAATGTGTCTGGGTGTTTTCAATGTAAAGAGCAAAAAAGTGCCCACATTAATGAATTTCGTAATGCAACTTCTCAAAAA\n>example 2\nGTCCATCACAGTCTGTTAGCCAGTCATTTTTGGGTACCTCATTTGCAAGCAGCTATTTGTAAATCTTATTTCTAGCTCGCGATTTTATTGAAATGTTTCTTGATCTATTTTAAATCTGTTGAGTAGTGTTCTTAAATCTGAATTACACTTTTTTTTGCTCATGTTGTTATCTATGAAAGGTTTTTTGAAATGTCTATATATTTTTCTAGCCTAGAAGAAGGAAGAGGAAATTGAAATTGTTCTGATCTGAGAATCGGGATACGGTAGAGATAACATGTTTGAAACGAAATTGAAACAATCATGGTTGCAAAAATACCTTCAGTCTACACGGCCTCTCTCAATTTCATTTATTTCAAAATTCCTCTTTTTCTCTCACACTCTCTCACGTGAGATTGAAAAT";
+	document.getElementById('paste-data').value = seq;
+	document.getElementById("model").selectedIndex = 2;
 }
 
 document.getElementById("evalForm").addEventListener("submit", async (event) => {
@@ -88,7 +89,7 @@ document.getElementById("evalForm").addEventListener("submit", async (event) => 
 				results.json();
 				document.getElementById("email").value = "";
 				document.getElementById("model").selectedIndex = 0;
-				// window.location.replace('./success.html?link=' + encodeURIComponent('https://github.com/OluwadareLab/CNNSplice'));
+				window.location.replace('./success.html?link=' + encodeURIComponent('https://github.com/OluwadareLab/CNNSplice'));
 			}).catch((error) => {
 				document.getElementById("email").value = "";
 				document.getElementById("model").selectedIndex = 0;
@@ -104,7 +105,7 @@ document.getElementById("evalForm").addEventListener("submit", async (event) => 
 
 		var file = document.getElementById('file').files[0];
 		var sequenceText = await readContent(file);
-		
+
 		status = checkFasta(sequenceText);
 
 		const end = Date.now();
@@ -125,7 +126,7 @@ document.getElementById("evalForm").addEventListener("submit", async (event) => 
 				results.json();
 				document.getElementById("email").value = "";
 				document.getElementById("model").selectedIndex = 0;
-				// window.location.replace('./success.html?link=' + encodeURIComponent('https://github.com/OluwadareLab/CNNSplice'));
+				window.location.replace('./success.html?link=' + encodeURIComponent('https://github.com/OluwadareLab/CNNSplice'));
 			}).catch((error) => {
 				document.getElementById("email").value = "";
 				document.getElementById("model").selectedIndex = 0;
