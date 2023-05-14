@@ -1,0 +1,71 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container" style="margin: auto; min-height: 100vh">
+  <div
+    style="
+      text-align: justify;
+      margin-left: 6em;
+      margin-right: 6em;
+      margin-top: 2em;
+    "
+  >
+    <h3>
+      CNNSplice: Robust Models for Splice Site Prediction Using Convolutional
+      Neural Networks
+    </h3>
+    <p style="font-size: 20px">
+      We present CNNSplice, a set of deep convolutional neural network models
+      for splice site prediction. Using the five-fold cross-validation model
+      selection technique, we explore several models based on typical machine
+      learning applications and propose five high-performing models to
+      efficiently predict the true and false SS in balanced and imbalanced
+      datasets. Our evaluation results indicate that CNNSplice's models achieve
+      a better performance compared with existing methods across five organisms'
+      datasets. In addition, our generality test shows CNNSplice's model ability
+      to predict and annotate splice sites in new or poorly trained genome
+      datasets indicating a broad application spectrum. CNNSplice demonstrates
+      improved model prediction, interpretability, and generalizability on
+      genomic datasets compared to existing splice site prediction tools.
+      CNNSplice can be accessed and utilized as an open-sourced software at
+      github and is also available as a containerized application that can be
+      run on any platform.
+    </p>
+    <h5>One-Hot Encoding and Parameter Tuning</h5>
+    <p>
+      In this study, we utilized a binary integer variable collection to
+      represent our input genomic nucleotide bases. Specifically, we assigned
+      <span style="font-weight: 500; color: blue">[1 0 0 0]</span>,
+      <span style="font-weight: 500; color: blue">[0 1 0 0]</span>,
+      <span style="font-weight: 500; color: blue">[0 0 1 0]</span>, and
+      <span style="font-weight: 500; color: blue">[0 0 0 1]</span> to represent
+      <span style="font-weight: 500; color: blue">Adenine (A)</span>,
+      <span style="font-weight: 500; color: blue">Cytosine (C)</span>,
+      <span style="font-weight: 500; color: blue">Guanine (G)</span>, and
+      <span style="font-weight: 500; color: blue">Thymine (T)</span>,
+      respectively. Additionally, we represented invalid nucleotide letters
+      <span style="font-weight: 500; color: blue">(N)</span> with
+      <span style="font-weight: 500; color: blue">[0,0,0,0]</span>, where each
+      nucleotide is located at the corresponding vector index containing a value
+      of <span style="font-weight: 500; color: blue">1</span>. Therefore, we
+      provided the CNN architecture with a
+      <span style="font-weight: 500; color: blue">Z X 4</span> input matrix,
+      where <span style="font-weight: 500; color: blue">Z</span> denotes the
+      genomic sequence length and
+      <span style="font-weight: 500; color: blue">4</span> denotes the
+      nucleotide types
+      <span style="font-weight: 500; color: blue">(A, C, G, T)</span>.
+    </p>
+    <h5>Genomic Datasets Sequence Length Selection</h5>
+    <p>
+      To maintain a good sequence length balance, and for a fair model
+      prediction and comparison with other baseline methods, we used a sequence
+      length of <span style="font-weight: 500; color: blue">400</span> of
+      sequence region <span style="font-weight: 500; color: blue">0-399</span>.
+      Thus, all algorithm acceptor and donor input species datasets regions in
+      this study have a sequence length of
+      <span style="font-weight: 500; color: blue">400</span> nucleotides bases.
+    </p>
+  </div>
+</div>
+
+{% endblock content %}
