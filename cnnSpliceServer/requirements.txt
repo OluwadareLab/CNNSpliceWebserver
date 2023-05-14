@@ -1,0 +1,29 @@
+Django==4.0.4
+django-picklefield==3.1
+djangorestframework==3.14.0
+numpy @ file:///opt/concourse/worker/volumes/live/9909a8d0-9b8e-44eb-6059-6c668078c029/volume/numpy_and_numpy_base_1626271794641/work
+numpydoc @ file:///tmp/build/80754af9/numpydoc_1605117425582/work
+path @ file:///opt/concourse/worker/volumes/live/ada87e48-bd34-49ac-6489-f51a7259db05/volume/path_1623603892072/work
+pathlib2 @ file:///opt/concourse/worker/volumes/live/9cb7a8e6-768d-4b83-4c58-1af1d6394b3e/volume/pathlib2_1625585698767/work
+pathspec==0.7.0
+pickleshare @ file:///tmp/build/80754af9/pickleshare_1606932040724/work
+py @ file:///tmp/build/80754af9/py_1607971587848/work
+pytest==6.2.4
+python-dateutil @ file:///tmp/build/80754af9/python-dateutil_1626374649649/work
+python-lsp-black @ file:///tmp/build/80754af9/python-lsp-black_1634232156041/work
+python-lsp-jsonrpc==1.0.0
+python-lsp-server==1.2.4
+python-slugify @ file:///tmp/build/80754af9/python-slugify_1620405669636/work
+pytz==2021.3
+pytz-deprecation-shim==0.1.0.post0
+PyWavelets @ file:///opt/concourse/worker/volumes/live/3cbb6155-7383-45e0-55bb-8641a92939f6/volume/pywavelets_1607645526758/work
+PyYAML==6.0
+scikit-image==0.18.3
+scikit-learn @ file:///opt/concourse/worker/volumes/live/83f46a43-da2a-467b-5581-ed2cbd128684/volume/scikit-learn_1621370403088/work
+scikit-learn-intelex==2021.20210714.100439
+scipy @ file:///opt/concourse/worker/volumes/live/8e481b15-67b8-4160-7a8b-26cd6e8fe54f/volume/scipy_1630606804826/work
+seaborn @ file:///tmp/build/80754af9/seaborn_1629307859561/work
+virtualenv==20.14.1
+
+martor
+gunicorn

@@ -1,0 +1,186 @@
+{% extends 'base.html' %} {% block content %}
+<!-- Responsive navbar-->
+
+<div class="container" style="margin: auto; min-height: 100vh">
+  <div
+    style="
+      text-align: justify;
+      margin-left: 6em;
+      margin-right: 6em;
+      margin-top: 2em;
+    "
+  >
+    {% load static %}
+    <h3>
+      CNNSplice: Robust Models for Splice Site Prediction Using Convolutional
+      Neural Networks
+    </h3>
+    <p style="font-size: 20px">
+      We present CNNSplice, a set of deep convolutional neural network models
+      for splice site prediction. Using the five-fold cross-validation model
+      selection technique, we explore several models based on typical machine
+      learning applications and propose five high-performing models to
+      efficiently predict the true and false SS in balanced and imbalanced
+      datasets. Our evaluation results indicate that CNNSplice’s models achieve
+      a better performance compared with existing methods across five organisms'
+      datasets....
+      <a href="{% url 'about' %}" id="link">[Read More]</a>
+    </p>
+  </div>
+
+  <div style="margin: 6em">
+    <h5>
+      Evaluate your data
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://www.bioinformatics.nl/tools/crab_fasta.html"
+        id="link"
+        >[fasta?]</a
+      >
+      <a id="example" href="javascript:loadExample();">[Load Example]</a>
+    </h5>
+    <div
+      style="display: none"
+      class="alert alert-danger"
+      role="alert"
+      id="alart-box"
+    >
+      <strong>fasta</strong> format is not correct. Check input.
+    </div>
+    <div>
+      <ul>
+        <li>Dataset sequence length is 400.</li>
+      </ul>
+    </div>
+
+    <form id="evalForm" class="form-inline" action="" method="POST">
+      {% csrf_token %}
+      <div class="form-check">
+        <div>
+          <input
+            class="form-check-input"
+            type="radio"
+            name="option"
+            id="paste-option"
+            value="past-fastq"
+            onclick="onChange(0)"
+            checked
+          />
+          <label class="form-check-label" for="flexRadioDefault1">
+            Paste fasta
+          </label>
+        </div>
+        <p style="margin: 0px">OR</p>
+        <div>
+          <input
+            class="form-check-input"
+            type="radio"
+            name="option"
+            id="upload-option"
+            value="upload-fastq"
+            onclick="onChange(1)"
+          />
+          <label class="form-check-label" for="flexRadioDefault2">
+            Upload fasta
+          </label>
+        </div>
+      </div>
+
+      <div id="data-option" class="form-group">
+        <div id="past-fastq-div">
+          <label class="sr-only" for="pwd">Paste fasta</label>
+          <textarea
+            id="paste-data"
+            class="form-control"
+            style="height: 200px"
+            aria-label="With textarea"
+            name="fastapaste"
+            placeholder=">example&#10;TTTTTTCGCATTGCTACGTCTGTCACCTTTCCCCACCAAGTTTGCAGTAAATGACGTGGAGCTTAGAATACCAAACCATATACATTGGGATGGGGACAATATTCGCAAAACGCAATCCGCTACATTAACACACTCCCAATCAGCAATCTAGCGATCCGTCTGGCGTGGAAAAAGAAAGATTTATAGTTACTGGGAGCCACCCCAATATTGCATGACTTCTCGCGTGTGTCGCAGACGTAATGACGACGACTCGGTCCGGCACGTTCCTTACGGTTGGCTAAATCTCGCCCAACCGTCTGAAGGTACGTGAGTCACCGCACACAAAGTAAGGGGCGACGGAGCCAACAGTGGTTCATATTTATTTGATCCAACAAACCCAACAAGACTCGCCCGGGTGTAT"
+          ></textarea>
+        </div>
+        <div id="upload-fastq-div" style="display: none">
+          <label for="formFile" class="form-label">Select File</label>
+          <input
+            class="form-control"
+            type="file"
+            id="file"
+            onclick="this.value=null;"
+            name="fastafile"
+          />
+          <p class="preview" style="display: none"></p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="sr-only" for="pwd">Model</label>
+        <select
+          class="form-select"
+          aria-label="Default select example"
+          id="model"
+          name="model"
+          required
+        >
+          <option value="" disabled selected>Choose species</option>
+          <optgroup label="Acceptor">
+            <option value="acceptor_cnnsplice_at.h5">
+              Arabidopsis thaliana (Acceptor)
+            </option>
+            <option value="acceptor_cnnsplice_c_elegans.h5">
+              Caenorhabditis elegans (Acceptor)
+            </option>
+            <option value="acceptor_cnnsplice_d_mel.h5">
+              Drosophila melanogaster (Acceptor)
+            </option>
+            <option value="acceptor_cnnsplice_hs.h5">
+              Homo sapiens (Acceptor)
+            </option>
+            <option value="acceptor_cnnsplice_oriza.h5">
+              Oryza sativa japonica (Acceptor)
+            </option>
+          </optgroup>
+          <optgroup label="Donor">
+            <option value="donor_cnnsplice_at.h5">
+              Arabidopsis thaliana (Donor)
+            </option>
+            <option value="donor_cnnsplice_c_elegans.h5">
+              Caenorhabditis elegans (Donor)
+            </option>
+            <option value="donor_cnnsplice_d_mel.h5">
+              Drosophila melanogaster (Donor)
+            </option>
+            <option value="donor_cnnsplice_hs.h5">Homo sapiens (Donor)</option>
+            <option value="donor_cnnsplice_oriza.h5">
+              Oryza sativa japonica (Donor)
+            </option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="sr-only" for="email">Email:</label>
+        <input
+          name="email"
+          type="email"
+          class="form-control"
+          id="email"
+          placeholder="Enter email"
+          required
+        />
+      </div>
+
+      <div style="margin-top: 1em" class="button">
+        <button
+          style="width: 100%"
+          type="submit"
+          class="btn btn-success"
+          onclick="onSubmit()"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}
