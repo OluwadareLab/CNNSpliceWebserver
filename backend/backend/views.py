@@ -1,8 +1,10 @@
 from django.http import JsonResponse
+from django.shortcuts import redirect, render
 from .models import Job
 from .serializer import ResponseSerializer
 from rest_framework.decorators import api_view
 from rest_framework import status
+from django.core.mail import send_mail
 import random
 import string
 from datetime import datetime
@@ -14,6 +16,7 @@ BASE_DIR = './../jobs/'
 REQUEST_PREFIX = 'request_'
 RESPONSE_PREFIX = 'response_'
 FILE_EXT = '.txt'
+
 
 @api_view(['GET'])
 def get_job_status(request):
@@ -33,17 +36,18 @@ def create_job(request):
         file_data = request.FILES['file_data']
 
     random_id = ''
-    random_id = random_id.join(random.choices(
-        string.ascii_uppercase + string.digits, k=N))
+    random_id = random_id.join(
+        random.choices(string.ascii_uppercase + string.digits, k=N))
     job_id = email + '_' + random_id
 
-    data_dir = BASE_DIR + job_id+'/'
+    data_dir = BASE_DIR + job_id + '/'
     if not os.path.exists(data_dir):
         os.makedirs(data_dir)
 
     if text_data is not None and text_data != "":
         filename = datetime.utcnow().strftime('%Y%m%d%H%M%S%f')
-        file_path = os.path.abspath(data_dir+REQUEST_PREFIX+filename+FILE_EXT)
+        file_path = os.path.abspath(data_dir + REQUEST_PREFIX + filename +
+                                    FILE_EXT)
         with open(file_path, 'a+') as file:
             lines = text_data.split("\r")
             for line in lines:
@@ -52,7 +56,7 @@ def create_job(request):
             file.flush()
             file.close()
     elif file_data is not None:
-        with open(data_dir+REQUEST_PREFIX+file_data.name, 'wb+') as file:
+        with open(data_dir + REQUEST_PREFIX + file_data.name, 'wb+') as file:
             for chunk in file_data.chunks():
                 file.write(chunk)
             file.flush()
@@ -62,10 +66,20 @@ def create_job(request):
     job.reference = job_id
     job.email = email
     job.model_name = model_name
-    job.data_dir = job_id+'/'
+    job.data_dir = job_id + '/'
     job.status = 'created'
     job.save()
 
+    message = 'Thank you for your submission, we have received your job, and it has been added to a queue.  You’ll receive a link when it has been processed.'
+    send_mail('CNNSplice Job ' + data_dir + ' Submitted', message,
+              'cnnsplice@gmail.com', [email])
+
     serialized_job = ResponseSerializer(job).data
 
-    return JsonResponse(serialized_job, status=status.HTTP_201_CREATED, safe=False)
+    return JsonResponse(serialized_job,
+                        status=status.HTTP_201_CREATED,
+                        safe=False)
+
+
+# def home_view(request):
+#     return render(request, '')
