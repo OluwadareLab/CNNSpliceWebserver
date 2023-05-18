@@ -9,6 +9,7 @@ import random
 import string
 from datetime import datetime
 import os
+import backend.cnnsplice as model
 
 N = 16
 BASE_URL = "http://127.0.0.1:8000/jobs/"
@@ -44,10 +45,11 @@ def create_job(request):
     if not os.path.exists(data_dir):
         os.makedirs(data_dir)
 
+    filename = ''
     if text_data is not None and text_data != "":
-        filename = datetime.utcnow().strftime('%Y%m%d%H%M%S%f')
-        file_path = os.path.abspath(data_dir + REQUEST_PREFIX + filename +
-                                    FILE_EXT)
+        filename = REQUEST_PREFIX + datetime.utcnow().strftime(
+            '%Y%m%d%H%M%S%f') + FILE_EXT
+        file_path = os.path.abspath(data_dir + filename)
         with open(file_path, 'a+') as file:
             lines = text_data.split("\r")
             for line in lines:
@@ -56,7 +58,8 @@ def create_job(request):
             file.flush()
             file.close()
     elif file_data is not None:
-        with open(data_dir + REQUEST_PREFIX + file_data.name, 'wb+') as file:
+        filename = REQUEST_PREFIX + file_data.name
+        with open(data_dir + filename, 'wb+') as file:
             for chunk in file_data.chunks():
                 file.write(chunk)
             file.flush()
@@ -75,6 +78,8 @@ def create_job(request):
               'cnnsplice@gmail.com', [email])
 
     serialized_job = ResponseSerializer(job).data
+
+    model.main(modeltype=model_name, filename=filename, location=data_dir)
 
     return JsonResponse(serialized_job,
                         status=status.HTTP_201_CREATED,
