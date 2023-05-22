@@ -73,7 +73,8 @@ def create_job(request):
     job.status = 'created'
     job.save()
 
-    message = 'Thank you for your submission, we have received your job, and it has been added to a queue.  Visit ' + file_path + ' to view job result in one hour.'
+    result_path = job.job_dir + 'result' + FILE_EXT
+    message = 'Thank you for your submission, we have received your job, and it has been added to a queue.  Visit ' + result_path + ' to view job result in one hour.'
     send_mail('CNNSplice Job ' + data_dir + ' Submitted', message,
               'cnnsplice@gmail.com', [email])
 
