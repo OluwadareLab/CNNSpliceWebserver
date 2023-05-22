@@ -1,5 +1,4 @@
-// const post_url = "http://52.14.14.177:8080/job/submit"
-const post_url = "http://127.0.0.1:8000/job/submit";
+const post_url = "http://biomlearn.uccs.edu:8081/job/submit";
 
 function onChange(val) {
   if (val == 0) {
