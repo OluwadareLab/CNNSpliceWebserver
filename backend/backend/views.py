@@ -70,18 +70,23 @@ def create_job(request):
     job.email = email
     job.model_name = model_name
     job.data_dir = job_id + '/'
-    job.status = 'created'
+    # job.status = 'created'
     job.save()
 
-    result_path = job.job_dir + 'result' + FILE_EXT
+    result_path = "storage/store/CNNSpliceWebserver/jobs/hmamohit@gmail.com_6C1XYXIQ5Q6HJ9H7/request_correct.txt"
     message = 'Thank you for your submission, we have received your job, and it has been added to a queue.  Visit ' + result_path + ' to view job result in one hour.'
+    message2 = 'Job result now available via the link ' + result_path
+    
     send_mail('CNNSplice Job ' + data_dir + ' Submitted', message,
               'cnnsplice@gmail.com', [email])
 
     serialized_job = ResponseSerializer(job).data
 
     model.main(modeltype=model_name, filename=filename, location=data_dir)
-
+    
+    send_mail('CNNSplice Job ' + data_dir + ' Completed', message2,
+              'cnnsplice@gmail.com', [email])
+    
     return JsonResponse(serialized_job,
                         status=status.HTTP_201_CREATED,
                         safe=False)
