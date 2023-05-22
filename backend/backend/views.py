@@ -1,5 +1,4 @@
 from django.http import JsonResponse
-from django.shortcuts import redirect, render
 from .models import Job
 from .serializer import ResponseSerializer
 from rest_framework.decorators import api_view
@@ -12,8 +11,9 @@ import os
 import backend.cnnsplice as model
 
 N = 16
-BASE_URL = "http://127.0.0.1:8000/jobs/"
-BASE_DIR = './../jobs/'
+
+BASE_URL = "http://biomlearn.uccs.edu:8081/jobs/"
+BASE_DIR = './../storage/store/CNNSpliceWebserver/jobs/'
 REQUEST_PREFIX = 'request_'
 RESPONSE_PREFIX = 'response_'
 FILE_EXT = '.txt'
@@ -85,7 +85,3 @@ def create_job(request):
     return JsonResponse(serialized_job,
                         status=status.HTTP_201_CREATED,
                         safe=False)
-
-
-# def home_view(request):
-#     return render(request, '')
