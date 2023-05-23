@@ -1,10 +1,28 @@
 const post_url = "http://oluwadarelab.uccs.edu:8080/job/submit";
 
+window.onload = reset();
+
+function reset() {
+  document.getElementById("form-div").style.display = "block";
+  document.getElementById("thankyou-div").style.display = "none";
+  document.getElementById("email").value = "";
+  document.getElementById("model").selectedIndex = 0;
+  document.getElementById("file").value = "";
+  document.getElementById("paste-data").value = "";
+  document.getElementById("paste-option").checked = true;
+  document.getElementById("upload-option").checked = false;
+  onChange(0);
+}
+
 function onChange(val) {
   if (val == 0) {
+    document.getElementById("paste-option").checked = true;
+    document.getElementById("upload-option").checked = false;
     document.getElementById("upload-fastq-div").style.display = "none";
     document.getElementById("past-fastq-div").style.display = "block";
   } else {
+    document.getElementById("paste-option").checked = false;
+    document.getElementById("upload-option").checked = true;
     document.getElementById("past-fastq-div").style.display = "none";
     document.getElementById("upload-fastq-div").style.display = "block";
   }
@@ -19,6 +37,7 @@ function showMore() {
 function loadExample() {
   var seq =
     ">example 0\nTGAAAATGCGTATTTCGCAACCTATTTGACGCGCAAAATATCTCGTAGCGAAAACTATAGTAATTCTTTAAATGACTACTGTAGCGCTTGTGTCGATTTACGGGCTCGATTTTTAAAATGAATTAAAATAATTTATTAATTTAAATAACGATAGAATATTAAAATTAAGTTTCATTTCAAAAATCGAGTTCCCGTAAATCGACACAAGCCCTACAGTAGTGGTTTAAAGAGTTACTGTAGTTTTCGCTACGAGATATTTTGTCAAATATGTTGCTCAATGTACGCATTCTCAGAATTCTGTGTTACCGTAATATATTTGTGTTTTATTATTTCAAAAAAAAAAAACAAAAATGGCGAAGTGTGAAAATATTATTCGGAAAATTGAATTGTTTTTCTTCCA\n>example 1\nACATGGAAACGAGATATTCTTAACGTTTTCTTCAAGTTCAATTAAAACCAATGCGAACATATTGTCAAAATCTACCTCCTGTTCTTTAACATTGATTAGTACCGCCTGAAAATGCTTGATGATGTTTGTAAAATGAGCTATGGAATTACTTTTTTTGGTTTCAAATAACATTGACTAGATGAGCAGTTTCCTGGGATCACCTTCATATTTTTTGTCACTTCTTCGGGAATTATTGCGCTTCTGCAAATATGGGAGTTTTCGAGAACATGATTCGATTACGAAATTCTTCAAAGTAGGCGTAGGTAATCTTTGAAGATGGAGTAATGTGTCTGGGTGTTTTCAATGTAAAGAGCAAAAAAGTGCCCACATTAATGAATTTCGTAATGCAACTTCTCAAAAA\n>example 2\nGTCCATCACAGTCTGTTAGCCAGTCATTTTTGGGTACCTCATTTGCAAGCAGCTATTTGTAAATCTTATTTCTAGCTCGCGATTTTATTGAAATGTTTCTTGATCTATTTTAAATCTGTTGAGTAGTGTTCTTAAATCTGAATTACACTTTTTTTTGCTCATGTTGTTATCTATGAAAGGTTTTTTGAAATGTCTATATATTTTTCTAGCCTAGAAGAAGGAAGAGGAAATTGAAATTGTTCTGATCTGAGAATCGGGATACGGTAGAGATAACATGTTTGAAACGAAATTGAAACAATCATGGTTGCAAAAATACCTTCAGTCTACACGGCCTCTCTCAATTTCATTTATTTCAAAATTCCTCTTTTTCTCTCACACTCTCTCACGTGAGATTGAAAAT";
+  reset();
   document.getElementById("paste-data").value = seq;
   document.getElementById("model").selectedIndex = 2;
 }
@@ -54,10 +73,10 @@ async function readContent(file) {
   reader.readAsText(file);
   await new Promise(
     (resolve) =>
-      (reader.onload = () => {
-        reader.result;
-        resolve();
-      })
+    (reader.onload = () => {
+      reader.result;
+      resolve();
+    })
   );
   return reader.result;
 }
@@ -89,6 +108,8 @@ document
   .addEventListener("submit", async (event) => {
     event.preventDefault();
 
+    openModal();
+
     var email = document.getElementById("email").value;
     var model = document.getElementById("model").value;
 
@@ -104,6 +125,7 @@ document
         document.getElementById("alart-box").style.display = "none";
         formData.append("text_data", sequenceText);
       } else {
+        closeModal();
         document.getElementById("alart-box").style.display = "block";
       }
     } else if (document.getElementById("upload-option").checked) {
@@ -117,34 +139,60 @@ document
         document.getElementById("alart-box").style.display = "none";
         formData.append("file_data", file);
       } else {
+        closeModal();
         document.getElementById("alart-box").style.display = "block";
       }
+    } else {
+      closeModal();
+      document.getElementById("alart-box").style.display = "block";
     }
 
     if (status) {
       document.getElementById("alart-box").style.display = "none";
-      await fetch(post_url, {
-        // mode: 'no-cors',
+      fetch(post_url, {
         method: "post",
         body: formData,
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((response) => {
-          res = JSON.stringify(response);
-          ref = response["reference"];
-          link = response["link"];
-          sessionStorage.setItem("ref", ref);
-          sessionStorage.setItem("link", link);
-          window.location.replace("./success.html");
-        })
-        .catch((error) => {
-          document.getElementById("email").value = "";
-          document.getElementById("model").selectedIndex = 0;
-          window.location.replace("./error.html");
-        });
+      });
+      closeModal();
+      sayThankyou();
     } else {
       document.getElementById("alart-box").style.display = "block";
     }
   });
+
+function backHome() {
+  showForm();
+  reset();
+}
+
+function showForm() {
+  document.getElementById("form-div").style.display = "block";
+  document.getElementById("thankyou-div").style.display = "none";
+}
+
+function sayThankyou() {
+  document.getElementById("form-div").style.display = "none";
+  document.getElementById("thankyou-div").style.display = "flex";
+}
+
+
+let modal = document.getElementById("modal");
+let pageCover = document.getElementById("pageCover");
+let main = document.getElementById("main");
+
+function openModal() {
+  modal.classList.remove("hidden");
+  pageCover.classList.remove("hidden");
+  main.addEventListener("focus", preventFocus);
+}
+
+
+function closeModal() {
+  modal.classList.add("hidden");
+  pageCover.classList.add("hidden");
+  main.removeEventListener("focus", preventFocus);
+}
+
+function preventFocus(evt) {
+  evt.preventDefault();
+}
