@@ -62,7 +62,7 @@ def load_data(location, filename):
 
 
 def testing_process(x_test, modeltype, location):
-	model = load_model('models/' + modeltype)
+	model = load_model('./backend/models/' + modeltype)
 	start_time = time.time()
 	print(model.summary())
 	prob = model.predict(x_test)

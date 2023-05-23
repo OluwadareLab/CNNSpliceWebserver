@@ -10,6 +10,9 @@ RUN apt-get install git -y
 RUN pip install django
 RUN pip install djangorestframework
 RUN pip install django-cors-headers
+RUN pip install tensorflow
+RUN pip install scikit-learn
+RUN pip install fasta-one-hot-encoder
 
 COPY ./backend/* ./backend/backend/
 COPY ./*.sqlite3 ./backend/
