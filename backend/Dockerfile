@@ -14,13 +14,15 @@ RUN pip install tensorflow
 RUN pip install scikit-learn
 RUN pip install fasta-one-hot-encoder
 
-COPY ./backend/* ./backend/backend/
+COPY ./backend/migrations/* ./backend/backend/migrations/
+COPY ./backend/models/* ./backend/backend/models/
+COPY ./backend/*.py ./backend/backend/
 COPY ./*.sqlite3 ./backend/
 COPY ./*.py ./backend/
 COPY ./runserver.sh ./backend/
 
 EXPOSE 8080
 STOPSIGNAL SIGTERM
-RUN chmod +x ./backend/runserver.sh
+#RUN chmod +x ./backend/runserver.sh
 
-CMD ["./backend/runserver.sh"]
+#CMD ["./backend/runserver.sh"]
