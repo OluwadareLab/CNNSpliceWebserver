@@ -176,19 +176,16 @@ function sayThankyou() {
 }
 
 
-let modal = document.getElementById("modal");
 let pageCover = document.getElementById("pageCover");
 let main = document.getElementById("main");
 
 function openModal() {
-  modal.classList.remove("hidden");
   pageCover.classList.remove("hidden");
   main.addEventListener("focus", preventFocus);
 }
 
 
 function closeModal() {
-  modal.classList.add("hidden");
   pageCover.classList.add("hidden");
   main.removeEventListener("focus", preventFocus);
 }
