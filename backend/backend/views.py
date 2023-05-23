@@ -8,7 +8,7 @@ import random
 import string
 from datetime import datetime
 import os
-import backend.cnnsplice as model
+from . import cnnsplice as model
 
 N = 16
 
