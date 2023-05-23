@@ -22,6 +22,6 @@ COPY ./runserver.sh ./backend/
 
 EXPOSE 8080
 STOPSIGNAL SIGTERM
-#RUN chmod +x ./backend/runserver.sh
 
-#CMD ["./backend/runserver.sh"]
+CMD ["python3 ./backend/manage.py makemigrations", "python3 ./backend/manage.py migrate"]
+# CMD ["python3 ./backend/manage.py makemigrations", "python3 ./backend/manage.py migrate", "chmod +x ./backend/runserver.sh", "./backend/runserver.sh"]

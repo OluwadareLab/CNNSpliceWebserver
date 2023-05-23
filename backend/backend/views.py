@@ -1,3 +1,5 @@
+import queue
+from dataclasses import dataclass
 from django.http import JsonResponse
 from .models import Job
 from .serializer import ResponseSerializer
@@ -60,24 +62,51 @@ def create_job(request):
     job.reference = job_id
     job.email = email
     job.model_name = model_name
-    job.data_dir = BASE_DIR + job_id +"/"
+    job.data_dir = BASE_DIR + job_id + "/"
     job.save()
 
     result_path = BASE_URL + BASE_DIR + job_id + "/result.txt"
-    message = 'Thank you for your submission, we have received your job, and it has been added to a queue.  Visit ' + \
-        result_path + ' to view job result in one hour.'
-    message2 = 'Job result now available via the link ' + result_path
 
-    send_mail('CNNSplice Job ' + data_dir + ' Submitted', message,
-              'cnnsplice@gmail.com', [email])
-
+    job_detail = JobDetial(model_name=model_name, filename=filename,
+                           location=data_dir, result=result_path, email=email)
+    task_runner(job_detail=job_detail)
     serialized_job = ResponseSerializer(job).data
-
-    model.main(modeltype=model_name, filename=filename, location=data_dir)
-
-    send_mail('CNNSplice Job ' + data_dir + ' Completed', message2,
-              'cnnsplice@gmail.com', [email])
-
     return JsonResponse(serialized_job,
                         status=status.HTTP_201_CREATED,
                         safe=False)
+
+@dataclass
+class JobDetial():
+    model_name: str
+    filename: str
+    location: str
+    result: str
+    email: str
+
+def task(queue):
+    while not queue.empty():
+        job_detail = queue.get()
+        model.main(modeltype=job_detail.model_name,
+                   filename=job_detail.filename, location=job_detail.location)
+        send_mail('CNNSplice Job Completed', 'Job result available at ' + job_detail.result,
+                  'cnnsplice@gmail.com', [job_detail.email])
+        yield
+
+
+def task_runner(job_detail):
+    work_queue = queue.Queue()
+    for work in [job_detail]:
+        work_queue.put(work)
+    tasks = [task(work_queue)]
+    message = 'Thank you for your submission. We have received your job, and it has been added to a queue.Wait for the success mail.'
+    send_mail('CNNSplice Job Submitted', message,
+              'cnnsplice@gmail.com', [job_detail.email])
+    done = False
+    while not done:
+        for t in tasks:
+            try:
+                next(t)
+            except StopIteration:
+                tasks.remove(t)
+            if len(tasks) == 0:
+                done = True
