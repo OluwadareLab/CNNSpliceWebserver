@@ -28,5 +28,4 @@ RUN python3 manage.py migrate
 EXPOSE 8080
 STOPSIGNAL SIGTERM
 
-#CMD ["cd backend", "python3 manage.py makemigrations", "python3 manage.py migrate"]
-# CMD ["python3 manage.py makemigrations", "python3 manage.py migrate", "chmod +x ./backend/runserver.sh", "./backend/runserver.sh"]
+CMD ["cd backend", "python3 manage.py makemigrations", "python3 manage.py migrate", "chmod +x ./backend/runserver.sh", "./backend/runserver.sh"]
