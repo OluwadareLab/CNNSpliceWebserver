@@ -1,4 +1,4 @@
-const post_url = "http://biomlearn.uccs.edu:8081/job/submit";
+const post_url = "http://oluwadarelab.uccs.edu:8080/job/submit";
 
 function onChange(val) {
   if (val == 0) {
