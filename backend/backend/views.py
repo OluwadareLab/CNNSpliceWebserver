@@ -13,7 +13,7 @@ import backend.cnnsplice as model
 N = 16
 
 BASE_URL = "http://biomlearn.uccs.edu:8081/jobs/"
-BASE_DIR = './../storage/store/CNNSpliceWebserver/jobs/'
+BASE_DIR = '/storage/store/CNNSpliceWebserver/jobs/'
 REQUEST_PREFIX = 'request_'
 RESPONSE_PREFIX = 'response_'
 FILE_EXT = '.txt'
@@ -41,7 +41,7 @@ def create_job(request):
         random.choices(string.ascii_uppercase + string.digits, k=N))
     job_id = email + '_' + random_id
 
-    data_dir = BASE_DIR + job_id + '/'
+    data_dir = "./../"+BASE_DIR + job_id + "/"
     if not os.path.exists(data_dir):
         os.makedirs(data_dir)
 
@@ -58,7 +58,7 @@ def create_job(request):
             file.flush()
             file.close()
     elif file_data is not None:
-        filename = REQUEST_PREFIX + file_data.name
+        filename = file_data.name
         with open(data_dir + filename, 'wb+') as file:
             for chunk in file_data.chunks():
                 file.write(chunk)
@@ -69,24 +69,24 @@ def create_job(request):
     job.reference = job_id
     job.email = email
     job.model_name = model_name
-    job.data_dir = job_id + '/'
-    # job.status = 'created'
+    job.data_dir = BASE_DIR + job_id +"/"
     job.save()
 
-    result_path = "storage/store/CNNSpliceWebserver/jobs/hmamohit@gmail.com_6C1XYXIQ5Q6HJ9H7/request_correct.txt"
-    message = 'Thank you for your submission, we have received your job, and it has been added to a queue.  Visit ' + result_path + ' to view job result in one hour.'
+    result_path = BASE_URL + BASE_DIR + job_id + "/result.txt"
+    message = 'Thank you for your submission, we have received your job, and it has been added to a queue.  Visit ' + \
+        result_path + ' to view job result in one hour.'
     message2 = 'Job result now available via the link ' + result_path
-    
+
     send_mail('CNNSplice Job ' + data_dir + ' Submitted', message,
               'cnnsplice@gmail.com', [email])
 
     serialized_job = ResponseSerializer(job).data
 
     model.main(modeltype=model_name, filename=filename, location=data_dir)
-    
+
     send_mail('CNNSplice Job ' + data_dir + ' Completed', message2,
               'cnnsplice@gmail.com', [email])
-    
+
     return JsonResponse(serialized_job,
                         status=status.HTTP_201_CREATED,
                         safe=False)
