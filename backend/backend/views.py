@@ -19,15 +19,6 @@ RESPONSE_PREFIX = 'response_'
 FILE_EXT = '.txt'
 
 
-@api_view(['GET'])
-def get_job_status(request):
-    reference = request.query_params.get('ref')
-    job = Job.objects.filter(reference=reference)
-    response = ResponseSerializer(job, many=True).data[0]
-
-    return JsonResponse(response, status=status.HTTP_200_OK, safe=False)
-
-
 @api_view(['POST'])
 def create_job(request):
     email = request.POST.get('email')
