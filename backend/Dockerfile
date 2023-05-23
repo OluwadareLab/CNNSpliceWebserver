@@ -14,10 +14,9 @@ RUN pip install tensorflow
 RUN pip install scikit-learn
 RUN pip install fasta-one-hot-encoder
 
-COPY ./backend/migrations/* ./backend/backend/migrations/
+COPY ./backend/migrations/__init__.py ./backend/backend/migrations/
 COPY ./backend/models/* ./backend/backend/models/
 COPY ./backend/*.py ./backend/backend/
-COPY ./*.sqlite3 ./backend/
 COPY ./*.py ./backend/
 COPY ./runserver.sh ./backend/
 
