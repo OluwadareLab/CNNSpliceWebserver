@@ -14,7 +14,7 @@ from . import cnnsplice as model
 
 N = 16
 
-BASE_URL = "http://biomlearn.uccs.edu:8081"
+BASE_URL = "http://oluwadarelab.uccs.edu:8081"
 BASE_DIR = '/storage/store/CNNSpliceWebserver/jobs/'
 REQUEST_PREFIX = 'request_'
 RESPONSE_PREFIX = 'response_'
