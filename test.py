@@ -36,6 +36,8 @@ np.set_printoptions(suppress=True)
 from fasta_one_hot_encoder import FastaOneHotEncoder
 import pdb
 
+Length = 400
+
 def mkdir_p(dir):
 	if not os.path.exists(dir):
 		os.makedirs(dir)
@@ -62,6 +64,7 @@ def load_data(location, filename):
 
 	encoded_seq = np.loadtxt('/jobs/sample.txt')
 	x_test = encoded_seq[:, ((400-Length)*2):(1600-(400-Length)*2)]
+	x_test = x_test.reshape(-1,400, 4)
 
 	return x_test
 
