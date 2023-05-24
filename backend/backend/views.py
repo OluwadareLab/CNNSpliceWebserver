@@ -5,17 +5,18 @@ from .models import Job
 from .serializer import ResponseSerializer
 from rest_framework.decorators import api_view
 from rest_framework import status
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 import random
 import string
 from datetime import datetime
 import os
 from . import cnnsplice as model
+import magic
 
 N = 16
 
-BASE_URL = "http://biomlearn.uccs.edu:8081"
-BASE_DIR = '/storage/store/CNNSpliceWebserver/jobs/'
+BASE_URL = "http://biomlearn.uccs.edu:8080"
+BASE_DIR = "/home/ubuntu/CNNSplice/jobs/"
 REQUEST_PREFIX = 'request_'
 RESPONSE_PREFIX = 'response_'
 FILE_EXT = '.txt'
@@ -32,7 +33,7 @@ def create_job(request):
     random_id = ''
     random_id = random_id.join(
         random.choices(string.ascii_uppercase + string.digits, k=N))
-    job_id = email + '_' + random_id
+    job_id = random_id
 
     data_dir = "./../"+BASE_DIR + job_id + "/"
     if not os.path.exists(data_dir):
@@ -67,13 +68,32 @@ def create_job(request):
 
     result_path = BASE_URL + BASE_DIR + job_id + "/result.txt"
 
-    message = 'Thank you for your submission. We have received your job, and it has been added to a queue. Wait for the success mail.'
-    send_mail('CNNSplice Job Submitted', message,
-              'cnnsplice@gmail.com', [email])
+    submission_message = 'Dear User,\n\nThank you for your submission. We have received your job, and it has been added to a queue. Your Job Id = ' + \
+        job_id+'. You will receive an email once the job is completed.\n\nThank you for using CNNSplice.\nOluwadare Lab'
+
+    submission_mail = EmailMessage(subject='CNNSplice Job Id '+job_id+' Submitted',
+                                   body=submission_message, from_email='cnnsplice@gmail.com', to=[email])
+    submission_mail.send()
+
+
     model.main(modeltype=model_name,
                filename=filename, location=data_dir)
-    send_mail('CNNSplice Job Completed', 'Job result available at ' + result_path,
-              'cnnsplice@gmail.com', [email])
+
+    complition_message = 'The job result for Job Id = '+job_id + \
+        ' is attached to this email.\n\nThank you for using CNNSplice.\nOluwadare Lab'
+
+    complition_mail = EmailMessage(subject='CNNSplice Job Id '+job_id+' Completed',
+                                   body=complition_message, from_email='cnnsplice@gmail.com', to=[email])
+    
+    result_filename = "result.txt"
+    mime = magic.Magic(mime=True)
+    mimetype = mime.from_file(data_dir + result_filename)
+    with open(data_dir + result_filename, 'wb+') as r_file:
+        complition_mail.attach(r_file.name, r_file.read(), mimetype)
+        complition_mail.send()
+        r_file.flush()
+        r_file.close()
+
     serialized_job = ResponseSerializer(job).data
     return JsonResponse(serialized_job,
                         status=status.HTTP_201_CREATED,
