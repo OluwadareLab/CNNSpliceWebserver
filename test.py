@@ -59,7 +59,10 @@ def load_data(location, filename):
 	appendcsv = np.array([result[x:x+400].flatten() for x in range(0, len(result), 400)])
 	np.savetxt(new_file, appendcsv, fmt='%d')
 	x_test = appendcsv.reshape(-1,400, 4)
-	
+
+	encoded_seq = np.loadtxt('/jobs/sample.txt')
+	x_test = encoded_seq[:, ((400-Length)*2):(1600-(400-Length)*2)]
+
 	return x_test
 
 
